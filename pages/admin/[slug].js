@@ -15,6 +15,7 @@ import { auth, db } from "@/lib/firebase";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
+import ImageUploader from "@/components/ImageUploader";
 
 export default function AdminPostEdit({}) {
   return (
@@ -66,10 +67,12 @@ function PostManager() {
 }
 
 function PostForm({ defaultValues, postRef, preview }) {
-  const { register, reset, watch, handleSubmit } = useForm({
+  const { register, reset, watch, handleSubmit, formState } = useForm({
     defaultValues,
     mode: "onChange",
   });
+
+  const { isValid, isDirty, errors } = formState;
 
   console.log(defaultValues, "defaultValues");
 
@@ -86,6 +89,8 @@ function PostForm({ defaultValues, postRef, preview }) {
     toast.success("Post updated successfully!");
   };
 
+  console.log(errors, "errors");
+
   return (
     <form onSubmit={handleSubmit(updatePost)}>
       {preview && (
@@ -95,7 +100,18 @@ function PostForm({ defaultValues, postRef, preview }) {
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
-        <textarea name="content" {...register("content")}></textarea>
+        <ImageUploader />
+        <textarea
+          name="content"
+          {...register("content", {
+            required: { value: true, message: "content is required" },
+            minLength: { value: 7, message: "content is too short" },
+            maxLength: { value: 20000, message: "content is too long" },
+          })}
+        ></textarea>
+        {errors.content && (
+          <p className="text-danger">{errors.content.message}</p>
+        )}
 
         <fieldset>
           <input
@@ -107,7 +123,11 @@ function PostForm({ defaultValues, postRef, preview }) {
           <label style={{ fontSize: "15px" }}>Published</label>
         </fieldset>
 
-        <button type="submit" className="btn-green">
+        <button
+          type="submit"
+          className="btn-green"
+          disabled={!isValid || !isDirty}
+        >
           Save Changes
         </button>
       </div>
