@@ -16,7 +16,7 @@ import PostFeed from "@/components/PostFeed";
 import { useState } from "react";
 
 //No of posts to be fetched per page
-const LIMIT = 1;
+const LIMIT = 5;
 
 export async function getServerSideProps(context) {
   const postsQuery = query(
