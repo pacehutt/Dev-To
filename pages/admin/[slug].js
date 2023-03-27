@@ -1,6 +1,6 @@
 import styles from "@/styles/Admin.module.css";
 import AuthCheck from "@/components/AuthCheck";
-import Metatags from "@/components/MetaTags";
+import Metatags from "@/components/Metatags";
 import {
   collection,
   doc,
