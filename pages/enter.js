@@ -6,6 +6,7 @@ import debounce from "lodash.debounce";
 import { writeBatch, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 import { signInWithPopup } from "firebase/auth";
+import { useRouter } from "next/router";
 
 export default function Enter({}) {
   const { user, username } = useContext(UserContext);
@@ -37,7 +38,7 @@ function SignInButton() {
   );
 }
 
-function SignOutButton() {
+export function SignOutButton() {
   return (
     <button className="btn-google" onClick={() => auth.signOut()}>
       {" "}
@@ -53,6 +54,7 @@ function UsernameForm() {
 
   const { user, username } = useContext(UserContext);
 
+  const router = useRouter();
   useEffect(() => {
     checkUsername(formValue);
   }, [formValue]);
@@ -115,6 +117,7 @@ function UsernameForm() {
     batch.set(usernameDoc, { uid: user.uid });
 
     await batch.commit();
+    router.push("/");
   };
 
   return (
@@ -140,14 +143,14 @@ function UsernameForm() {
             Choose
           </button>
 
-          <h3>Debug state</h3>
+          {/* <h3>Debug state</h3>
           <div>
             Username: {formValue}
             <br />
             Loading: {loading.toString()}
             <br />
             Username Valid: {isValid.toString()}
-          </div>
+          </div> */}
         </form>
       </section>
     )

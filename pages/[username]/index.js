@@ -9,6 +9,7 @@ import {
   where,
   query as Query,
 } from "firebase/firestore";
+import { useRouter } from "next/router";
 
 // This function is called at build time
 export async function getServerSideProps({ query }) {
