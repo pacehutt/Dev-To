@@ -2,14 +2,13 @@ import { UserContext } from "@/lib/context";
 import { useContext } from "react";
 import { SignOutButton } from "@/pages/enter";
 import { auth } from "@/lib/firebase";
-import { useRouter } from "next/router";
+import { withRouter } from "next/router";
 
 // UI component for user profile
-export default function UserProfile({ user }) {
+function UserProfile({ user, router }) {
   const u = useContext(UserContext);
 
   const displayName = u?.user?.displayName.split(" ").slice(0, 2).join(" ");
-  const router = useRouter();
   const { username } = router.query;
   return (
     <div className="box-center">
@@ -21,9 +20,13 @@ export default function UserProfile({ user }) {
         className="card-img-center"
       />
       <p>
-        <i>@{user.username}</i>
+        {username === u?.username ? (
+          <i>@{user.username}</i>
+        ) : (
+          <i>@{username}</i>
+        )}
       </p>
-      <h1>{displayName || "Anonymous User"}</h1>
+      <h1>{username === u?.username ? <>{displayName}</> : <>{username}</>}</h1>
 
       {username === u?.username && (
         <button
@@ -43,3 +46,5 @@ export default function UserProfile({ user }) {
     </div>
   );
 }
+
+export default withRouter(UserProfile);

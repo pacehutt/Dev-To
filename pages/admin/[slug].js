@@ -74,10 +74,7 @@ function PostForm({ defaultValues, postRef, preview }) {
 
   const { isValid, isDirty, errors } = formState;
 
-  console.log(defaultValues, "defaultValues");
-
   const updatePost = async ({ content, published }) => {
-    console.log(typeof content);
     await updateDoc(postRef, {
       content,
       published,
@@ -88,8 +85,6 @@ function PostForm({ defaultValues, postRef, preview }) {
 
     toast.success("Post updated successfully!");
   };
-
-  console.log(errors, "errors");
 
   return (
     <form onSubmit={handleSubmit(updatePost)}>

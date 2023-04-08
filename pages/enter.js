@@ -66,18 +66,12 @@ function UsernameForm() {
         const docSnap = await getDoc(docRef);
 
         if (!docSnap.exists()) {
-          console.log("username not exists:");
-          console.log("No such document!");
           setIsValid(true);
           setLoading(false);
         } else {
-          console.log("username exists:");
-          console.log("Document data:", docSnap.data());
           setIsValid(false);
           setLoading(false);
         }
-
-        console.log("Firestore read executed");
       }
     }, 500),
     []

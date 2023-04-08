@@ -5,7 +5,6 @@ import { useDocument } from "react-firebase-hooks/firestore";
 export default function Heart({ postRef }) {
   const heartRef = doc(postRef, "hearts", auth.currentUser.uid);
   const [heartDoc] = useDocument(heartRef);
-  console.log(heartDoc?.exists());
 
   const removeHeart = async () => {
     const uid = auth.currentUser.uid;

@@ -38,8 +38,6 @@ export async function getServerSideProps({ query }) {
 
     // retrieve the posts data using the query
     posts = (await getDocs(postsQuery)).docs.map(postToJSON);
-
-    console.log(posts, "posts");
   }
 
   return {

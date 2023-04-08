@@ -27,7 +27,6 @@ export async function getServerSideProps(context) {
   );
 
   const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
-  console.log(posts);
   return {
     props: {
       posts,
@@ -76,7 +75,7 @@ export default function Home(props) {
         <button onClick={getMorePosts}>Load More</button>
       )}
       <Loader show={loading} />
-      {postsEnd && "You have reached the end!"}
+      {postsEnd && "You have reached the end! 🥲💔"}
     </main>
   );
 }
